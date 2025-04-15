@@ -29,7 +29,8 @@ public class ListCheckTest {
                 {7, "Да, обязательно. Всем самокатов! И Москве, и Московской области."},
         };
     }
-@Test
+
+    @Test
     public void checkList() throws InterruptedException{
         ListCheck listCheck = new ListCheck();
         listCheck.openPage();

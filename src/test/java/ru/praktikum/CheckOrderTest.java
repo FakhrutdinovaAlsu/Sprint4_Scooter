@@ -6,13 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+
+import static org.junit.Assert.assertEquals;
 
 // Класс оформления заказа
 @RunWith(Parameterized.class)
@@ -45,7 +45,6 @@ public class CheckOrderTest {
         return new Object[][]{
                 {"Петр","Иванов","Москва","Бульвар Рокоссовского","88005553535","16.04.2025","четверо суток","чёрный жемчуг","чистый"},
                 {"Вася","Петров","Москва","Красные Ворота","88005553555","18.04.2025","двое суток","серая безысходность","новый"},
-
         };
     }
 
@@ -60,69 +59,24 @@ public class CheckOrderTest {
     @Test
     public void CheckOrder() throws InterruptedException {
         driver.get("https://qa-scooter.praktikum-services.ru/");
-
-        By orderButton = By.className("Button_Button__ra12g");
-        driver.findElement(orderButton).click();
-        //Thread.sleep(100);
-
-        By nameFieldLocator = By.xpath("//input[@placeholder='* Имя']");
-        driver.findElement(nameFieldLocator).sendKeys(name);
-
-        By secondNameFieldLocator = By.xpath("//input[@placeholder='* Фамилия']");
-        driver.findElement(secondNameFieldLocator).sendKeys(secondName);
-        //Thread.sleep(100);
-
-        By addressFieldLocator = By.xpath("//input[@placeholder='* Адрес: куда привезти заказ']");
-        driver.findElement(addressFieldLocator).sendKeys(address);
-        //Thread.sleep(100);
-
-        By metroStationFieldLocator = By.xpath("//input[@placeholder='* Станция метро']");
-        driver.findElement(metroStationFieldLocator).click();
-        //Thread.sleep(100);
-
-        By metroStationName = By.xpath("//*[contains(@class, 'Order_Text__2broi') and contains(text(), '"+ station +"')]");
-        driver.findElement(metroStationName).click();
-        //Thread.sleep(100);
-
-        By phoneNumberFieldLocator = By.xpath("//input[@placeholder='* Телефон: на него позвонит курьер']");
-        driver.findElement(phoneNumberFieldLocator).sendKeys(phone);
-        //Thread.sleep(100);
-
-        By ButtonNext = By.className("Button_Middle__1CSJM");
-        driver.findElement(ButtonNext).click();
-
-        By clickWhenGiveFieldLocator = By.xpath("//input[@placeholder='* Когда привезти самокат']");
-        driver.findElement(clickWhenGiveFieldLocator).sendKeys(dateOrder);
-        //Thread.sleep(100);
-
-        By chooseWhenGiveFieldLocator = By.className("react-datepicker__day--selected");
-        driver.findElement(chooseWhenGiveFieldLocator).click();
-        //Thread.sleep(100);
-
-        By howLongGivenFieldLocator = By.className("Dropdown-placeholder");
-        driver.findElement(howLongGivenFieldLocator).click();
-        //Thread.sleep(100);
-
-        By howDaysRent = By.xpath("//*[contains(@class, 'Dropdown-option') and contains(text(), '"+ longOrder  +"')]");
-        driver.findElement(howDaysRent).click();
-        //Thread.sleep(100);
-
-        By colorScooter = By.xpath("//*[contains(@class, 'Checkbox_Label__3wxSf') and contains(text(), '" + color +"')]");
-        driver.findElement(colorScooter).click();
-        //Thread.sleep(100);
-
-        By commentForСourier = By.xpath("//input[@placeholder='Комментарий для курьера']");
-        driver.findElement(commentForСourier).sendKeys(comment);
-        //Thread.sleep(100);
-
-        By buttonOrderFinish = By.xpath("//button[contains(@class, 'Button_Middle__1CSJM') and text()='Заказать']");
-        driver.findElement(buttonOrderFinish).click();
-        //Thread.sleep(100);
-
-       By buttonYesFinish = By.xpath("//button[contains(@class, 'Button_Middle__1CSJM') and text()='Да']");
-        driver.findElement(buttonYesFinish).click();
+        OrderPage orderPage = new OrderPage();
+        driver.findElement(orderPage.orderButton).click();
+        driver.findElement(orderPage.nameFieldLocator).sendKeys(name);
+        driver.findElement(orderPage.secondNameFieldLocator).sendKeys(secondName);
+        driver.findElement(orderPage.addressFieldLocator).sendKeys(address);
+        driver.findElement(orderPage.metroStationFieldLocator).click();
+        driver.findElement(orderPage.getMetroStationNameLocator(station)).click();
+        driver.findElement(orderPage.phoneNumberFieldLocator).sendKeys(phone);
+        driver.findElement(orderPage.ButtonNext).click();
+        driver.findElement(orderPage.clickWhenGiveFieldLocator).sendKeys(dateOrder);
+        driver.findElement(orderPage.chooseWhenGiveFieldLocator).click();
+        driver.findElement(orderPage.howLongGivenFieldLocator).click();
+        driver.findElement(orderPage.getHowDaysRentLocator(longOrder)).click();
+        driver.findElement(orderPage.getColorScooterLocator(color)).click();
+        driver.findElement(orderPage.commentForСourier).sendKeys(comment);
+        driver.findElement(orderPage.buttonOrderFinish).click();
+        driver.findElement(orderPage.buttonYesFinish).click();
     }
-
 
     @After
     public void  tearDown() {

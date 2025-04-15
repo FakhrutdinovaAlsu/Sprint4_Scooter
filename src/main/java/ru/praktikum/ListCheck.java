@@ -25,7 +25,6 @@ public class ListCheck {
         By text = By.xpath(accordionPanelId);
         Thread.sleep(1500);
         return driver.findElement(text).getText();
-
     }
 
     public void clickAccordion(int index) {
