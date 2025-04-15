@@ -16,7 +16,7 @@ public class ListCheckTest {
         this.expectedText = expectedText;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters (name = "Тестовые данные: index accordion, text accordion")
     public static Object [][] getTextData() {
         return new Object[][]{
                 {0, "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
@@ -39,4 +39,5 @@ public class ListCheckTest {
         assertEquals(expectedText,actualText);
         listCheck.tearDown();
     }
+
 }

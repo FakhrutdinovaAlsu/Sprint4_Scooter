@@ -40,7 +40,7 @@ public class CheckOrderTest {
         this.comment = comment;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: name, secondName, address, station, phone, dateOrder, longOrder, color, comment ")
     public static Object [][] getTextData() {
         return new Object[][]{
                 {"Петр","Иванов","Москва","Бульвар Рокоссовского","88005553535","16.04.2025","четверо суток","чёрный жемчуг","чистый"},
@@ -63,61 +63,61 @@ public class CheckOrderTest {
 
         By orderButton = By.className("Button_Button__ra12g");
         driver.findElement(orderButton).click();
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By nameFieldLocator = By.xpath("//input[@placeholder='* Имя']");
         driver.findElement(nameFieldLocator).sendKeys(name);
 
         By secondNameFieldLocator = By.xpath("//input[@placeholder='* Фамилия']");
         driver.findElement(secondNameFieldLocator).sendKeys(secondName);
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By addressFieldLocator = By.xpath("//input[@placeholder='* Адрес: куда привезти заказ']");
         driver.findElement(addressFieldLocator).sendKeys(address);
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By metroStationFieldLocator = By.xpath("//input[@placeholder='* Станция метро']");
         driver.findElement(metroStationFieldLocator).click();
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By metroStationName = By.xpath("//*[contains(@class, 'Order_Text__2broi') and contains(text(), '"+ station +"')]");
         driver.findElement(metroStationName).click();
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By phoneNumberFieldLocator = By.xpath("//input[@placeholder='* Телефон: на него позвонит курьер']");
         driver.findElement(phoneNumberFieldLocator).sendKeys(phone);
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By ButtonNext = By.className("Button_Middle__1CSJM");
         driver.findElement(ButtonNext).click();
 
         By clickWhenGiveFieldLocator = By.xpath("//input[@placeholder='* Когда привезти самокат']");
         driver.findElement(clickWhenGiveFieldLocator).sendKeys(dateOrder);
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By chooseWhenGiveFieldLocator = By.className("react-datepicker__day--selected");
         driver.findElement(chooseWhenGiveFieldLocator).click();
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By howLongGivenFieldLocator = By.className("Dropdown-placeholder");
         driver.findElement(howLongGivenFieldLocator).click();
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By howDaysRent = By.xpath("//*[contains(@class, 'Dropdown-option') and contains(text(), '"+ longOrder  +"')]");
         driver.findElement(howDaysRent).click();
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By colorScooter = By.xpath("//*[contains(@class, 'Checkbox_Label__3wxSf') and contains(text(), '" + color +"')]");
         driver.findElement(colorScooter).click();
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By commentForСourier = By.xpath("//input[@placeholder='Комментарий для курьера']");
         driver.findElement(commentForСourier).sendKeys(comment);
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
         By buttonOrderFinish = By.xpath("//button[contains(@class, 'Button_Middle__1CSJM') and text()='Заказать']");
         driver.findElement(buttonOrderFinish).click();
-        Thread.sleep(100);
+        //Thread.sleep(100);
 
        By buttonYesFinish = By.xpath("//button[contains(@class, 'Button_Middle__1CSJM') and text()='Да']");
         driver.findElement(buttonYesFinish).click();
