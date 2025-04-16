@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -56,18 +57,24 @@ public class CheckOrderTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
+
     @Test
     public void CheckOrder() throws InterruptedException {
         driver.get("https://qa-scooter.praktikum-services.ru/");
         OrderPage orderPage = new OrderPage();
-        driver.findElement(orderPage.orderButton).click();
-        driver.findElement(orderPage.nameFieldLocator).sendKeys(name);
-        driver.findElement(orderPage.secondNameFieldLocator).sendKeys(secondName);
-        driver.findElement(orderPage.addressFieldLocator).sendKeys(address);
-        driver.findElement(orderPage.metroStationFieldLocator).click();
-        driver.findElement(orderPage.getMetroStationNameLocator(station)).click();
-        driver.findElement(orderPage.phoneNumberFieldLocator).sendKeys(phone);
-        driver.findElement(orderPage.ButtonNext).click();
+        driver.findElement(orderPage.orderButtonUp).click();
+        processFirstOrderPage(orderPage);
+        processSecondOrderPage(orderPage);
+        confirmOrderPage(orderPage);
+        String factTextOrderConfirm = getPanelTextConfirmOrder(orderPage);
+        assertEquals(orderPage.textOrderConfirm, factTextOrderConfirm);
+    }
+
+    private void confirmOrderPage(OrderPage orderPage) {
+        driver.findElement(orderPage.buttonYesFinish).click();
+    }
+
+    private void processSecondOrderPage(OrderPage orderPage) {
         driver.findElement(orderPage.clickWhenGiveFieldLocator).sendKeys(dateOrder);
         driver.findElement(orderPage.chooseWhenGiveFieldLocator).click();
         driver.findElement(orderPage.howLongGivenFieldLocator).click();
@@ -75,7 +82,20 @@ public class CheckOrderTest {
         driver.findElement(orderPage.getColorScooterLocator(color)).click();
         driver.findElement(orderPage.commentForСourier).sendKeys(comment);
         driver.findElement(orderPage.buttonOrderFinish).click();
-        driver.findElement(orderPage.buttonYesFinish).click();
+    }
+
+    private void processFirstOrderPage(OrderPage orderPage) {
+        driver.findElement(orderPage.nameFieldLocator).sendKeys(name);
+        driver.findElement(orderPage.secondNameFieldLocator).sendKeys(secondName);
+        driver.findElement(orderPage.addressFieldLocator).sendKeys(address);
+        driver.findElement(orderPage.metroStationFieldLocator).click();
+        driver.findElement(orderPage.getMetroStationNameLocator(station)).click();
+        driver.findElement(orderPage.phoneNumberFieldLocator).sendKeys(phone);
+        driver.findElement(orderPage.ButtonNext).click();
+    }
+
+    private String getPanelTextConfirmOrder(OrderPage orderPage) {
+        return driver.findElement(orderPage.orderConfirmButton).getText();
     }
 
     @After
