@@ -1,7 +1,13 @@
 package ru.praktikum;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class OrderPage {
 
@@ -20,7 +26,7 @@ public class OrderPage {
     public By commentForСourierLocator = By.xpath("//input[@placeholder='Комментарий для курьера']");
     public By buttonOrderFinishLocator = By.xpath("//button[contains(@class, 'Button_Middle__1CSJM') and text()='Заказать']");
     public By buttonYesFinishLocator = By.xpath("//button[contains(@class, 'Button_Middle__1CSJM') and text()='Да']");
-    public By orderButtonDownPage = By.className("Button_UltraBig__UU3Lp");
+    public By orderButtonDownPage = By.className("Button_Middle__1CSJM");
     public By orderConfirmButtonLocator = By.className("Order_ModalHeader__3FDaJ");
     public String textOrderConfirm = "Заказ оформлен";
 
@@ -46,6 +52,13 @@ public class OrderPage {
 
     public void orderButtonUp() {
         driver.findElement(orderButtonUpLocator).click();
+    }
+
+    public void orderButtonDown() {
+        WebElement buttonElement = driver.findElement(orderButtonDownPage);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", buttonElement);
+        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(orderButtonDownPage));
+        element.click();
     }
 
     public void processFirstOrderPage(String name, String secondName, String address, String station, String phone) {

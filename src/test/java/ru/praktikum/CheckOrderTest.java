@@ -28,8 +28,9 @@ public class CheckOrderTest {
     private final String longOrder;
     private final String color;
     private final String comment;
+    private final String buttonPosition;
 
-    public CheckOrderTest (String name, String secondName, String address,String station, String phone, String dateOrder,String longOrder,String color,String comment) {
+    public CheckOrderTest (String name, String secondName, String address,String station, String phone, String dateOrder,String longOrder,String color,String comment, String buttonPosition) {
         this.name = name;
         this.secondName = secondName;
         this.address = address;
@@ -39,13 +40,14 @@ public class CheckOrderTest {
         this.longOrder = longOrder;
         this.color = color;
         this.comment = comment;
+        this.buttonPosition = buttonPosition;
     }
 
-    @Parameterized.Parameters(name = "Тестовые данные: name, secondName, address, station, phone, dateOrder, longOrder, color, comment ")
+    @Parameterized.Parameters(name = "Тестовые данные: name, secondName, address, station, phone, dateOrder, longOrder, color, comment, buttonPosition")
     public static Object [][] getTextData() {
         return new Object[][]{
-                {"Петр","Иванов","Москва","Бульвар Рокоссовского","88005553535","16.04.2025","четверо суток","чёрный жемчуг","чистый"},
-                {"Вася","Петров","Москва","Красные Ворота","88005553555","18.04.2025","двое суток","серая безысходность","новый"},
+                {"Петр","Иванов","Москва","Бульвар Рокоссовского","88005553535","16.04.2025","четверо суток","чёрный жемчуг","чистый","Up"},
+                {"Вася","Петров","Москва","Красные Ворота","88005553555","18.04.2025","двое суток","серая безысходность","новый","Down"},
         };
     }
 
@@ -61,7 +63,11 @@ public class CheckOrderTest {
     public void CheckOrder() {
         OrderPage orderPage = new OrderPage(driver);
         orderPage.open();
-        orderPage.orderButtonUp();
+        if (buttonPosition.equals("Up")) {
+            orderPage.orderButtonUp();
+        } else {
+            orderPage.orderButtonDown();
+        }
         orderPage.processFirstOrderPage(name, secondName, address, station, phone);
         orderPage.processSecondOrderPage(dateOrder, longOrder, color, comment);
         orderPage.confirmOrderPage();
