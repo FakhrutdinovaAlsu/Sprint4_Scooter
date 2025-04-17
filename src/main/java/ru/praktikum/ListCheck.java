@@ -13,17 +13,12 @@ import java.time.Duration;
 public class ListCheck {
     private WebDriver driver;
 
-    public ListCheck () {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        //driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+public ListCheck (WebDriver driver) {
+        this.driver = driver;
     }
-
-    public String getPanelText(int index) throws InterruptedException {
+    public String getPanelText(int index) {
         String accordionPanelId = "//div[@id='accordion__panel-"+index+"']/p";
         By text = By.xpath(accordionPanelId);
-        Thread.sleep(1500);
         return driver.findElement(text).getText();
     }
 
@@ -42,9 +37,6 @@ public class ListCheck {
         driver.get("https://qa-scooter.praktikum-services.ru/");
     }
 
-    public void  tearDown() {
-        driver.quit();
-    }
 }
 
 

@@ -1,13 +1,24 @@
 package ru.praktikum;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
 import static org.junit.Assert.assertEquals;
 
 // Класс "Выпадающий список в разделе «Вопросы о важном»"
 @RunWith(Parameterized.class)
 public class ListCheckTest {
+    private WebDriver driver;
     private final int index;
     private final String expectedText;
 
@@ -30,15 +41,28 @@ public class ListCheckTest {
         };
     }
 
+    @Before
+    public void StartUp()  {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        //driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
     @Test
-    public void checkList() throws InterruptedException{
-        ListCheck listCheck = new ListCheck();
+    public void checkList() {
+        ListCheck listCheck = new ListCheck(driver);
         listCheck.openPage();
         listCheck.closeCookie();
         listCheck.clickAccordion(index);
         String actualText = listCheck.getPanelText(index);
         assertEquals(expectedText,actualText);
-        listCheck.tearDown();
+    }
+
+    @After
+    public void  tearDown() {
+        driver.quit();
     }
 
 }

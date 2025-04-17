@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -58,7 +59,7 @@ public class CheckOrderTest {
     }
 
     @Test
-    public void CheckOrder() throws InterruptedException {
+    public void CheckOrder() {
         OrderPage orderPage = new OrderPage(driver);
         orderPage.open();
         orderPage.orderButtonUp();
