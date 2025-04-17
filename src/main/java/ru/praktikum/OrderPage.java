@@ -86,6 +86,7 @@ public class OrderPage {
     }
 
     public String getPanelTextConfirmOrder() {
-        return driver.findElement(orderConfirmButtonLocator).getText();
+        String innerTextOrderConfirm = driver.findElement(orderConfirmButtonLocator).getText();
+        return innerTextOrderConfirm.substring(0,14);
     }
 }
